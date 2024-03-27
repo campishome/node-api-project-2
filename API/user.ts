@@ -50,15 +50,11 @@ router.post("/check", (req, res) => {
     const userType = result[0].type;
     const userId = result[0].user_id;
 
-    // ตรวจสอบว่ารหัสผ่านที่ผู้ใช้ป้อนตรงกับที่มีในฐานข้อมูลหรือไม่
-    if (user.Password !== storedPassword) {
-      return res.status(401).json({ error: "Incorrect password" });
-    }
-
     // ส่งข้อมูลผู้ใช้กลับไปถ้ารหัสผ่านถูกต้อง
     res.json({ 
       userType: userType,
-      userId : userId
+      userId : userId,
+      hashPassword:storedPassword
     });
   });
 });

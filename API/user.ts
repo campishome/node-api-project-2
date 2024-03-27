@@ -11,10 +11,15 @@ router.get("/", (req, res) => {
 });
 
 router.get("/all_user", (req, res) => {
-    conn.query('select * from User where type ="user"', (err, result, fields)=>{
-      res.json(result);
+    conn.query('SELECT * FROM User WHERE type = "user"', (err, result, fields) => {
+        if (err) {
+            res.status(500).json({ error: "An error occurred while fetching users" });
+            return;
+        }
+        res.json(result);
     });
-  });
+});
+
 router.post("/insert", (req, res) => {
   const user: userReq = req.body;
   let sql =

@@ -162,3 +162,18 @@ router.post("/vote_check", (req, res) => {
         });
     });
 });
+
+router.post("/rank", (req, res) => {
+  // let date = +req.params.date;
+  const search_date: votereq = req.body;
+  let sql =
+      "SELECT *  FROM vote   INNER JOIN Image ON vote.image_id = Image.image_id   WHERE vote_date = ?  ORDER BY score DESC";
+  sql = mysql.format(sql,[
+    search_date.vote_date,
+    search_date.image_url
+  ]);
+  conn.query(sql, (err, result,fields) => {
+    if (err) throw err;
+    res.json(result);
+  });
+});
